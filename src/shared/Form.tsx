@@ -3,6 +3,7 @@ import { computed, defineComponent, PropType, ref, VNode } from 'vue';
 import { Button } from './Button';
 import { EmojiSelect } from './EmojiSelect';
 import s from './Form.module.scss';
+import { getFriendlyError } from './getFrendlyError';
 import { Time } from './time';
 export const Form = defineComponent({
   props: {
@@ -75,7 +76,7 @@ export const FormItem = defineComponent({
             <input class={[s.formItem, s.input, s.validationCodeInput]}
               placeholder={props.placeholder} />
             <Button disabled={isCounting.value} onClick={props.onClick} class={[s.formItem, s.button, s.validationCodeButton]}>
-              {isCounting.value ? `${count.value}秒后重置` : '发送验证码'}
+              {isCounting.value ? `${count.value}秒后可重新发送` : '发送验证码'}
             </Button>
           </>
         case 'select':
@@ -113,7 +114,7 @@ export const FormItem = defineComponent({
             {content.value}
           </div>
           <div class={s.formItem_errorHint}>
-            <span>{props.error ?? '　'}</span>
+            <span>{props.error ? getFriendlyError(props.error) : '　'}</span>
           </div>
         </label>
       </div>
